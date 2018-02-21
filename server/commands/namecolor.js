@@ -26,15 +26,20 @@ module.exports = {
     }
   }
   }
-
+  function error() {
+    call.message.channel.send("The color you provided was either invalid, or is not available for your current plan.")
+  }
+  function success() {
+    call.message.channel.send(`Successfully given you the ${color} color role!`)
+  }
   if(call.message.member.roles.find("name", "Bro Time Deluxe")) {
     if (deluxecolors.find((value) => {return value == color}) !== null) {
       let role = call.message.guild.roles.find("name", `${color}`);
       removecolorroles();
       call.message.member.addRole(role)
-      successembed();
+      success();
     } else {
-      errorembed();
+      error();
     }
   } else
   if(call.message.member.roles.find("name", "Bro Time Premium")) {
@@ -42,9 +47,9 @@ module.exports = {
       let role = call.message.guild.roles.find("name", `${color}`);
       removecolorroles();
       call.message.member.addRole(role)
-      successembed();
+      success();
     } else {
-      errorembed();
+      error();
     }
   } else
   if(call.message.member.roles.find("name", "Bro Time Plus")) {
@@ -52,18 +57,18 @@ module.exports = {
       let role = call.message.guild.roles.find("name", `${color}`);
       removecolorroles();
       call.message.member.addRole(role)
-      successembed();
+      success();
     } else {
-      errorembed();
+      error();
     }
   } else {
     if (freecolors.find((value) => {return value == color}) !== null) {
       let role = call.message.guild.roles.find("name", `${color}`);
       removecolorroles();
       call.message.member.addRole(role)
-      successembed();
+      success();
     } else {
-      errorembed()
+      error()
     }
   }
 }
