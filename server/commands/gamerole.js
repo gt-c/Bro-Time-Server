@@ -1,8 +1,8 @@
 var games = ["roblox", "minecraft", "cuphead", "fortnite", "undertale", "unturned", "vrchat",
 	"pubg", "fnaf", "clash of clans", "clash royale", "sims", "terraria", "subnautica", "rocket league",
 	"portal", "hat in time", "csgo", "splatoon", "mario", "starbound", "garry's mod", "overwatch",
-				"call of duty", "destiny"]
-
+	"call of duty", "destiny"]
+	
 module.exports = {
 	id: "gamerole",
 	load: () => {},
