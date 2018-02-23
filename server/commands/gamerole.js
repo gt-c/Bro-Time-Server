@@ -21,7 +21,7 @@ module.exports = {
 			} else {
 				call.message.channel.send(`${game} is not a valid game. A list of games can be found running
 				the MantaroBot command \`.gameroles\`. If it is a valid game and you would  like to see it
-				here in the near future, dm \`@ethanlaj#8805\``.)
+				here in the near future, dm \`@ethanlaj#8805\`.`)
 			}
 		} else {
 			call.message.channel.send("You didn't ask for any game role. \:( \n Usage: `/gamerole (gamname)`")
