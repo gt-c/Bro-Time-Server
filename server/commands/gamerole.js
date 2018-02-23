@@ -20,7 +20,7 @@ module.exports = {
 				}
 			} else {
 				call.message.channel
-					.send(`${game} is not a valid game option. Make sure it is an actual gamerole from \`.gameroles\`.`);
+					.send(`${game} is not a valid game option.`);
 			}
 		} else {
 			call.message.channel.send("You didn't ask for any game role. \n Usage: `/gamerole (gamname)`");
