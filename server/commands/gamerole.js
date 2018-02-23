@@ -7,7 +7,7 @@ module.exports = {
 	id: "gamerole",
 	load: () => {},
 	execute: (call) => {
-		let game = call.params.toString();
+		let game = call.params.readRaw();
 		if (game != null) {
 			let game = game.toLowerCase();
 			if (games.find((value) => {return value == game;}) !== null) {
