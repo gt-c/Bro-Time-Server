@@ -10,7 +10,7 @@ module.exports = {
 		let game = call.params.readRaw();
 		if (game !== null) {
 			let game = game.toLowerCase();
-			if (games.find((value) => {return value == game;}) !== null) {
+			if (games.includes(game)) {
 				if (call.message.member.roles.find("name", `${game}`)) {
 					call.message.member.removeRole(call.message.guild.roles.find("name", game));
 					call.message.channel.send(`Since you already had the \`${game}\` game role,
