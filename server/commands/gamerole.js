@@ -8,7 +8,7 @@ module.exports = {
 	load: () => {},
 	execute: (call) => {
 		let game = call.params.readRaw();
-		if (game != null) {
+		if (game !== null) {
 			let game = game.toLowerCase();
 			if (games.find((value) => {return value == game;}) !== null) {
 				if (call.message.member.roles.find("name", `${game}`)) {
