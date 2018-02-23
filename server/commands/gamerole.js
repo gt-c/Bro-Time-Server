@@ -7,7 +7,7 @@ module.exports = {
 	id: "gamerole",
 	load: () => {},
 	execute: (call) => {
-		let game = call.params.readRaw(" ").toLowerCase();
+		let game = call.params.readRaw().toLowerCase();
 		if (game !== null) {
 			if (games.includes(game)) {
 				if (call.message.member.roles.find("name", game)) {
@@ -20,7 +20,7 @@ module.exports = {
 				}
 			} else {
 				call.message.channel
-					.send(`${game} is not a valid game option.`);
+					.send(`\`${game}\` is not a valid game option.`);
 			}
 		} else {
 			call.message.channel.send("You didn't ask for any game role. \n Usage: `/gamerole (gamname)`");
