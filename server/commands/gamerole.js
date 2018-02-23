@@ -11,7 +11,7 @@ module.exports = {
 		if (game !== null) {
 			let game = game.toLowerCase();
 			if (games.includes(game)) {
-				if (call.message.member.roles.find("name", `${game}`)) {
+				if (call.message.member.roles.find("name", game`)) {
 					call.message.member.removeRole(call.message.guild.roles.find("name", game));
 					call.message.channel.send(`Since you already had the \`${game}\` game role,
 					 it has been removed from you!`);
