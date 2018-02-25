@@ -19,23 +19,23 @@ module.exports = {
 	load: () => {},
 	execute: (call) => {
 		let color = call.params.readRaw().toLowerCase();
-		let role = call.params.readRole()
+		let role = call.params.readRole();
 		if (allroles.includes(color)) {
 			if (call.message.member.roles.find("name", "Bro Time Deluxe")) {
-				call.message.member.addRole(role)
+				call.message.member.addRole(role);
 				removeColorRoles(call.message.guild.roles, call.message.member);
 				call.message.channel.send(`Successfully given you the ${role.name} color role!`);
 			} else if (call.message.member.roles.find("name", "Bro Time Premium")) {
-				if (premiumcolors.includes(color)||pluscolors.includes(color)||freecolors.includes(colors)) {
-					call.message.member.addRole(role)
+				if (premiumcolors.includes(color)||pluscolors.includes(color)||freecolors.includes(color)) {
+					call.message.member.addRole(role);
 					removeColorRoles(call.message.guild.roles, call.message.member);
 					call.message.channel.send(`Successfully given you the ${role.name} color role!`);
 				} else if (deluxecolors.includes(color)) {
 					call.message.channel.send(`${role.name} is a deluxe only color. Your plan is premium.`);
 				}
 			} else if (call.message.member.roles.find("name", "Bro Time Plus")) {
-				if (pluscolors.includes(color)||freecolors.includes(colors)) {
-					call.message.member.addRole(role)
+				if (pluscolors.includes(color)||freecolors.includes(color)) {
+					call.message.member.addRole(role);
 					removeColorRoles(call.message.guild.roles, call.message.member);
 					call.message.channel.send(`Successfully given you the ${role.name} color role!`);
 				} else if (premiumcolors.includes(color)) {
