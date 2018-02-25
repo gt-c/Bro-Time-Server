@@ -1,73 +1,63 @@
-var deluxecolors = ["red", "blue", "orange", "green", "black", "purple", "pink", "yellow",
+var allroles = ["red", "blue", "orange", "green", "black", "purple", "pink", "yellow",
 	"hotpink", "indigo", "bronze", "cyan", "lightgreen", "silver", "brightred", "hotbrown",
 	"darkviolet", "gold"];
-var premiumcolors = ["red", "blue", "orange", "green", "black", "purple", "pink", "yellow",
-	"hotpink", "indigo", "bronze", "cyan", "lightgreen", "silver", "brightred", "hotbrown",
-	"darkviolet"];
-var pluscolors = ["red", "blue", "orange", "green", "black", "purple", "pink", "yellow",
-	"hotpink", "indigo", "bronze", "cyan", "lightgreen"];
-var freecolors = ["red", "blue", "orange", "green", "black", "purple", "yellow"];
+var deluxecolors = ["gold"];
+var premiumcolors = ["silver", "brightred", "darkviolet", "hotbrown", "darkgreen"];
+var pluscolors = ["pink", "indigo", "bronze", "hotpink", "cyan", "lightgreen"];
+var freecolors = ["red", "blue", "orange", "green", "black", "purple", "yellow", "white"];
 
 function removeColorRoles(roles, user) {
-	deluxecolors.forEach((color) => {
+	allroles.forEach((color) => {
 		if (user.roles.find("name", color)) {
 			user.removeRole(roles.find("name", color));
 		}
 	});
 }
 
-function error(channel) {
-	channel.send("The color you provided was either invalid, or is not available for your current plan.");
-}
-
-function success(channel, color) {
-	channel.send(`Successfully given you the ${color} color role!`);
-}
-
 module.exports = {
 	id: "namecolor",
 	load: () => {},
 	execute: (call) => {
-		let color = call.params.readParameter().toLowerCase();
-
-		if (!call.message.member.roles.find("name", color)) {
+		let color = call.params.readRaw().toLowerCase();
+		let role = call.params.readRole()
+		if (allroles.includes(color)) {
 			if (call.message.member.roles.find("name", "Bro Time Deluxe")) {
-				if (deluxecolors.includes(color)) {
-					let role = call.message.guild.roles.find("name", `${color}`);
-					removeColorRoles(call.message.guild.roles, call.message.member);
-					call.message.member.addRole(role);
-					success(call.message.channel, color);
-				} else {
-					error(call.message.channel);
-				}
+				call.message.member.addRole(role)
+				removeColorRoles(call.message.guild.roles, call.message.member);
+				call.message.channel.send(`Successfully given you the ${role.name} color role!`);
 			} else if (call.message.member.roles.find("name", "Bro Time Premium")) {
-				if (premiumcolors.includes(color)) {
-					let role = call.message.guild.roles.find("name", `${color}`);
+				if (premiumcolors.includes(color)||pluscolors.includes(color)||freecolors.includes(colors)) {
+					call.message.member.addRole(role)
 					removeColorRoles(call.message.guild.roles, call.message.member);
-					call.message.member.addRole(role);
-					success(call.message.channel, color);
-				} else {
-					error(call.message.channel);
+					call.message.channel.send(`Successfully given you the ${role.name} color role!`);
+				} else if (deluxecolors.includes(color)) {
+					call.message.channel.send(`${role.name} is a deluxe only color. Your plan is premium.`);
 				}
 			} else if (call.message.member.roles.find("name", "Bro Time Plus")) {
-				if (pluscolors.includes(color)) {
-					let role = call.message.guild.roles.find("name", `${color}`);
+				if (pluscolors.includes(color)||freecolors.includes(colors)) {
+					call.message.member.addRole(role)
 					removeColorRoles(call.message.guild.roles, call.message.member);
-					call.message.member.addRole(role);
-					success(call.message.channel, color);
-				} else {
-					error(call.message.channel);
+					call.message.channel.send(`Successfully given you the ${role.name} color role!`);
+				} else if (premiumcolors.includes(color)) {
+					call.message.channel.send(`${role.name} is a premium and up color. Your plan is plus.`);
+				} else if (deluxecolors.includes(color)) {
+					call.message.channel.send(`${role.name} is a deluxe only color. Your plan is plus.`);
 				}
 			} else {
 				if (freecolors.includes(color)) {
-					let role = call.message.guild.roles.find("name", `${color}`);
-					removeColorRoles(call.message.guild.roles, call.message.member);
 					call.message.member.addRole(role);
-					success(call.message.channel, color);
-				} else {
-					error(call.message.channel);
+					removeColorRoles(call.message.guild.roles, call.message.member);
+					call.message.channel.send(`Successfully given you the ${role.name} color role!`);
+				} else if (pluscolors.includes(color)) {
+					call.message.channel.send(`${role.name} is a plus and up color. Your plan is free.`);
+				} else if (premiumcolors.includes(color)) {
+					call.message.channel.send(`${role.name} is a premium and up color. Your plan is free.`);
+				} else if (deluxecolors.includes(color)) {
+					call.message.channel.send(`${role.name} is a deluxe only color. Your plan is free.`);
 				}
 			}
+		} else {
+			call.message.channel.send(`${color} is not a valid color role. Make sure it contains no spaces.`);
 		}
 	}
 };
