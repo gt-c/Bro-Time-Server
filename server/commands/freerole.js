@@ -4,8 +4,8 @@ module.exports = {
 	id: "freerole",
 	load: () => {},
 	execute: (call) => {
-		var finput = "[F] "+call.params.readRaw().toUpperCase();
 		var role = call.params.readRole(true, (candidate) => { return candidate.name.startsWith("[F] "); });
+		var finput = role.name
 		if (joinableroles.includes(finput)) {
 			if(call.message.member.roles.has(role.id)) {
 				call.message.member.removeRole(role).then(() => {
