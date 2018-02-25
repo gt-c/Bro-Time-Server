@@ -5,15 +5,16 @@ module.exports = {
 	load: () => {},
 	execute: (call) => {
 		var finput = "[F] "+call.params.readRaw().toUpperCase();
+		var role = call.params.readRole(true, (candidate) => { return candidate.name.startsWith("[F] "); });
 		if (joinableroles.includes(finput)) {
-			if (call.message.member.roles.find("name", finput)) {
-				call.message.member.removeRole(call.message.guild.roles.find("name", `${finput}`)).then(() => {
+			if(call.message.member.roles.has(role.id)) {
+				call.message.member.removeRole(role).then(() => {
 					call.message.channel.send(`Successfully removed the \`${finput}\` free role from you.`);
 				}).catch(() => {
 					call.message.channel.send(`Unable to remove the \`${finput}\` free role from you!`);
 				});
 			} else {
-				call.message.member.addRole(call.message.guild.roles.find("name", `${finput}`)).then(() => {
+				call.message.member.addRole(role).then(() => {
 					call.message.channel.send(`Successfully added the \`${finput}\` free role to you.`);
 				}).catch(() => {
 					call.message.channel.send(`Unable to add the \`${finput}\` free role to you!`);
