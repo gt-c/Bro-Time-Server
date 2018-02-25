@@ -72,7 +72,7 @@ class Paramaters {
 			// Check for objects by id.
 			var id = parseFloat(param);
 			if (!isNaN(id)) {
-				object = objects.get(id);				
+				object = objects.get(id);
 				if (object !== null && !filter(object)) {
 					object = null;
 				}
