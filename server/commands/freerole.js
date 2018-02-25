@@ -20,7 +20,7 @@ module.exports = {
 				});
 			}
 		} else {
-			call.message.channel.send(`\`${call.params.readRaw()}\` is not a valid freerole option`)
+			call.message.channel.send(`\`${call.params.readRaw()}\` is not a valid freerole option`);
 		}
 	}
 };
