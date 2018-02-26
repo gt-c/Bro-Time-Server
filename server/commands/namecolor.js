@@ -1,66 +1,94 @@
-var caproles = ["Red", "Blue", "Orange", "Green", "Black", "Purple", "Pink", "Yellow",
-	"HotPink", "Indigo", "Bronze", "Cyan", "LightGreen", "Silver", "BrightRed", "HotBrown",
-	"DarkViolet", "Gold"];
-var allroles = ["red", "blue", "orange", "green", "black", "purple", "pink", "yellow",
-	"hotpink", "indigo", "bronze", "cyan", "lightgreen", "silver", "brightred", "hotbrown",
-	"darkviolet", "gold"];
-var deluxecolors = ["gold"];
-var premiumcolors = ["silver", "brightred", "darkviolet", "hotbrown", "darkgreen"];
-var pluscolors = ["pink", "indigo", "bronze", "hotpink", "cyan", "lightgreen"];
-var freecolors = ["red", "blue", "orange", "green", "black", "purple", "yellow", "white"];
+async function awaitReply(message, question, limit = 60000){
+    const filter = m => m.author.id === message.author.id;
+    await message.channel.send(question);
+    try {
+      const collected = await message.channel.awaitMessages(filter, { max: 1, time: limit, errors: ['time'] });
+      return collected.first().content;
+    } catch (error) {
+      console.log(error)
+      return false;
+    }
+  }
 
-function removeColorRoles(roles, user) {
-	caproles.forEach((color) => {
-		if (user.roles.find("name", color)) {
-			user.removeRole(roles.find("name", color));
+async function makerole(message, digit) {
+	const name = await awaitReply(message, "Please specify the name of your role.", 60000);
+	if (name == "cancel") return message.channel.send("**Cancelled Prompt.**");
+	if (name.length > 62) {
+		message.channel.send("Length of role is too long. Max length is 62 characters")
+	} else {
+		const color = await awaitReply(message, "Please specify the hex color of your role.", 60000);
+		if (color == "cancel") return message.channel.send("**Cancelled Prompt.**");
+		var ishex  = /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(`${color}`)
+		if (ishex == true) {
+			message.guild.createRole({
+				name: `cc ${digit} ${message.author.username} ${name}`,
+				color: color,
+			}).then(() => {
+				let rolename = `cc ${digit} ${message.author.username} ${name}`;
+				let role = message.guild.roles.find(r=> r.name.toLowerCase() === rolename.toLowerCase());
+				let goldpos = message.guild.roles.find("name", "Gold").position;
+				message.guild.setRolePosition(role, goldpos+1, false);
+				message.member.removeRole(message.guild.roles.find("name", `${digit}`));
+				message.member.addRole(role);
+				message.channel
+				.send(`Successfully created the role and given you it! To remove the role say \`/customcolor remove ${digit}\``);
+			}).catch(() => {
+				message.channel.send("🤖 Something went wrong and I could not make the role! 🤖");
+			});
+		} else {
+			message.channel.send("Invalid hex code. Hex code example \`#ff0000\`.");
 		}
-	});
+	}
+}
+
+async function deleterole(message) {
+	let rolename = `cc ${digitchoice} ${message.author.username} ${name}`;
+	const digitchoice = await awaitReply(message, "Which color role would you like to remove (1-5)?", 60000);
+	if (digitchoice == "cancel") return message.channel.send("**Canceled Prompt.**");
+	if (message.guild.roles.find("name" rolename)) {
+		if (!isNaN(digitchoice)) {
+			if (digitchoice <= 5 && digitchoice >= 1) {
+				const approval = await awaitReply(message, "Are you sure you would like to delete this custom role?", 60000);
+				if (approval == "cancel") return message.channel.send("**Canceled Prompt.**");
+				if (approval == "yes" || approval == "Yes") {
+					let role = message.guild.roles.find(r=> r.name.toLowerCase() === rolename.toLowerCase());
+					role.delete()
+					let role1 = message.guild.roles.find("name", `${digitchoice}`)
+					message.member.addRole(role1);
+				}
+			} else {
+				message.channel.send(`\`${digitchoice} \` must be a number between 1 - 5.`);
+			}
+		} else {
+			message.channel.send(`\`${digitchoice} \` is not a number.`);
+		}
+	} else {
+		message.channel.send(`You do not have a role under \`${digitchoice}\`.`);
+	}
 }
 
 module.exports = {
-	id: "namecolor",
+	id: "customcolor",
 	load: () => {},
-	execute: (call) => {
-		let color = call.params.readRaw().toLowerCase();
-		let role = call.params.readRole();
-		if (allroles.includes(color)) {
-			if (call.message.member.roles.find("name", "Bro Time Deluxe")) {
-				call.message.member.addRole(role);
-				removeColorRoles(call.message.guild.roles, call.message.member);
-				call.message.channel.send(`Successfully given you the \`${role.name}\` color role!`);
-			} else if (call.message.member.roles.find("name", "Bro Time Premium")) {
-				if (premiumcolors.includes(color)||pluscolors.includes(color)||freecolors.includes(color)) {
-					call.message.member.addRole(role);
-					removeColorRoles(call.message.guild.roles, call.message.member);
-					call.message.channel.send(`Successfully given you the \`${role.name}\` color role!`);
-				} else if (deluxecolors.includes(color)) {
-					call.message.channel.send(`\`${role.name}\` is a deluxe only color. Your plan is premium.`);
-				}
-			} else if (call.message.member.roles.find("name", "Bro Time Plus")) {
-				if (pluscolors.includes(color)||freecolors.includes(color)) {
-					call.message.member.addRole(role);
-					removeColorRoles(call.message.guild.roles, call.message.member);
-					call.message.channel.send(`Successfully given you the \`${role.name}\` color role!`);
-				} else if (premiumcolors.includes(color)) {
-					call.message.channel.send(`\`${role.name}\` is a premium and up color. Your plan is plus.`);
-				} else if (deluxecolors.includes(color)) {
-					call.message.channel.send(`\`${role.name}\` is a deluxe only color. Your plan is plus.`);
-				}
-			} else {
-				if (freecolors.includes(color)) {
-					call.message.member.addRole(role);
-					removeColorRoles(call.message.guild.roles, call.message.member);
-					call.message.channel.send(`Successfully given you the \`${role.name}\` color role!`);
-				} else if (pluscolors.includes(color)) {
-					call.message.channel.send(`\`${role.name}\` is a plus and up color. Your plan is free.`);
-				} else if (premiumcolors.includes(color)) {
-					call.message.channel.send(`\`${role.name}\` is a premium and up color. Your plan is free.`);
-				} else if (deluxecolors.includes(color)) {
-					call.message.channel.send(`\`${role.name}\` is a deluxe only color. Your plan is free.`);
-				}
-			}
+	execute: async (call) => {
+		var input1 = call.params.readRaw().toLowerCase();
+		console.log(input1)
+		if (input1=="remove"||input1=="rem"||input1=="delete"||input1=="del") {
+				deleterole(call.message)
 		} else {
-			call.message.channel.send(`\`${color} \` is not a valid color role. Make sure it contains no spaces.`);
+			if (call.message.member.roles.find("name", "1")) {
+				makerole(call.message, 1)
+			} else if (call.message.member.roles.find("name", "2")) {
+				makerole(call.message, 2)
+			} else if (call.message.member.roles.find("name", "3")) {
+				makerole(call.message, 3)
+			} else if (call.message.member.roles.find("name", "4")) {
+				makerole(call.message, 4)
+			} else if (call.message.member.roles.find("name", "5")) {
+				makerole(call.message, 5)
+			} else {
+				call.message.channel.send("You do not have any remaining custom roles.")
+			}
 		}
 	}
 };
