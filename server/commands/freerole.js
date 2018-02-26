@@ -4,9 +4,9 @@ module.exports = {
 	id: "freerole",
 	load: () => {},
 	execute: (call) => {
-		var finput = "[F] "+call.params.readRaw().toUpperCase();
+		var finput = call.params.readRaw();
 		var role = call.params.readRole(true, (candidate) => { return candidate.name.startsWith("[F] "); });
-		if (joinableroles.includes(finput)) {
+		if (joinableroles.includes("[F] "+finput.toUpperCase())) {
 			finput = role.name;
 			if (call.message.member.roles.has(role.id)) {
 				call.message.member.removeRole(role).then(() => {
@@ -22,7 +22,7 @@ module.exports = {
 				});
 			}
 		} else {
-			call.message.channel.send(`\`${call.params.readRaw()} \` is not a valid freerole option`);
+			call.message.channel.send(`\`${finput} \` is not a valid freerole option`);
 		}
 	}
 };
