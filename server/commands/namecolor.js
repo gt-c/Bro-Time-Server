@@ -22,8 +22,8 @@ module.exports = {
 	load: () => {},
 	execute: (call) => {
 		let rawinput = call.params.readRaw();
-		let role = call.params.readRole();
 		if (allroles.includes(rawinput.toLowerCase())) {
+			let role = call.params.readRole();
 			if (call.message.member.roles.find("name", "Bro Time Deluxe")) {
 				call.message.member.addRole(role);
 				removeColorRoles(call.message.guild.roles, call.message.member);
