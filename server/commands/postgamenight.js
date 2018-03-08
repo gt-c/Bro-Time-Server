@@ -11,6 +11,7 @@ function isURL(str) {
 	"(\\?[;&a-z\\d%_.~+=-]*)?"+
 	"(\\#[-a-z\\d_]*)?$", "i");
 	return pattern.test(str);
+	// credit to Tom Gullen https://stackoverflow.com/users/356635/tom-gullen from stackoverflow <3
 }
 
 async function awaitReply(message, question, limit = 60000){
