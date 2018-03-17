@@ -1,13 +1,12 @@
-var joinableroles = ["[F] QOTD", "[F] ANN", "[F] GW"];
+var joinableroles = ["QOTD", "ANN", "GW"];
 
 module.exports = {
 	id: "freerole",
 	load: () => {},
 	execute: (call) => {
-		var finput = call.params.readRaw();
-		if (joinableroles.includes("[F] "+finput.toUpperCase())) {
-			var role = call.params.readRole(true, (candidate) => { return candidate.name.startsWith("[F] "); });
-			finput = role.name;
+		var finput = call.params.readRaw().trim();
+		if (joinableroles.includes(finput.toUpperCase())) {
+			var role = call.message.guild.roles.find("name", finput.toUpperCase());
 			if (call.message.member.roles.has(role.id)) {
 				call.message.member.removeRole(role).then(() => {
 					call.message.channel.send(`Successfully removed the \`${finput}\` free role from you.`);
