@@ -1,11 +1,8 @@
-const DECIMAL_PLACES = 3;
-
 module.exports = {
 	id: "ping",
 	load: () => {},
 	execute: (call) => {
-		var mult = Math.pow(10, DECIMAL_PLACES);
-		var delay = Math.round(call.client.ping*mult)/mult;
+		var delay = Math.round(call.client.ping);
 		var diag;
 		if (delay <= 0) {
 			diag = "impossible";
