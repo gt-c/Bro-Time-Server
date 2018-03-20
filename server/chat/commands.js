@@ -54,7 +54,7 @@ fs.readdirSync(__dirname + "/../commands").forEach(file => {
 		}).then(module => {
 			modules.set(module.id, module);
 		}, exc => {
-			console.warn("A command failed to load: %s (reason: %s)", match[1], exc);
+			if (window.console) console.warn("A command failed to load: %s (reason: %s)", match[1], exc);
 		});
 	}
 });
@@ -115,7 +115,7 @@ module.exports = {
 							}
 						}
 					} catch (error) {
-						console.warn(`The ${name} command failed to execute: ${error}`);
+						if (window.console) console.warn(`The ${name} command failed to execute: ${error}`);
 						message.channel.send(`The ${name} command failed to load.`);
 					}
 				}
