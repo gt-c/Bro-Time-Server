@@ -13,14 +13,15 @@ module.exports = {
 			return g.toLowerCase().startsWith(rawinput.toLowerCase());
 		});
 		if (game !== undefined) {
-			if (call.message.member.roles.has(game.id)) {
-				call.message.member.removeRole(game).then(() => {
+			var role = call.message.guild.roles.find("name", game);
+			if (call.message.member.roles.has(role.id)) {
+				call.message.member.removeRole(role).then(() => {
 					call.message.channel.send(`Since you already had the \`${game}\` game role, it has been removed from you!`);
 				}).catch(() => {
 					call.message.channel.send(`Unable to remove the \`${game}\` game role!`);
 				});
 			} else {
-				call.message.member.addRole(game).then(() => {
+				call.message.member.addRole(role).then(() => {
 					call.message.channel.send(`Successfully given you the \`${game}\` game role!`);
 				}).catch(() => {
 					call.message.channel.send(`Unable to give you the \`${game}\` game role!`);
