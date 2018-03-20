@@ -14,7 +14,7 @@ module.exports = {
 			game = game[0];
 			var role = call.message.guild.roles.find("name", game);
 			game = role.name.toLowerCase();
-			if(call.message.member.roles.has(role.id)) {
+			if (call.message.member.roles.has(role.id)) {
 				call.message.member.removeRole(role).then(() => {
 					call.message.channel.send(`Since you already had the \`${game}\` game role, it has been removed from you!`);
 				}).catch(() => {
