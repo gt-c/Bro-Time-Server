@@ -7,10 +7,12 @@ module.exports = {
 	id: "gamerole",
 	load: () => {},
 	execute: (call) => {
-		var rawinput = call.message.content.substr(10);
-		if (rawinput == undefined) return call.message.reply("You must specify a gamerole!");
-		var game = games.filter(g => g.toLowerCase().startsWith(rawinput.toLowerCase()));
-		if (game.length != games.length && game.length != 0) {
+		var rawinput = call.params.readRaw();
+		if (rawinput === "") return call.message.reply("You must specify a gamerole!");
+		var game = games.find(function(g) {
+			return g.toLowerCase().startsWith(rawinput.toLowerCase());
+		});
+		if (game !== undefined) {
 			game = game[0];
 			var role = call.message.guild.roles.find("name", game);
 			game = role.name.toLowerCase();
