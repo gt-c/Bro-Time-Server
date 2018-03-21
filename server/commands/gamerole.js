@@ -1,7 +1,7 @@
-var games = ["roblox", "minecraft", "cuphead", "fortnite", "undertale", "unturned", "vrchat",
-	"pubg", "fnaf", "clash of clans", "clash royale", "sims", "terraria", "subnautica", "rocket league",
-	"portal", "hat in time", "csgo", "splatoon", "mario", "starbound", "garry's mod", "overwatch",
-	"call of duty", "destiny"];
+var games = ["Roblox", "Minecraft", "Cuphead", "Fortnite", "Undertale", "Unturned", "VRChat",
+	"PUBG", "FNAF", "Clash of Clans", "Clash Royale", "Sims", "Terraria", "Subnautica", "Rocket League",
+	"Portal", "Hat in Time", "CSGO", "Splatoon", "Mario", "Starbound", "Garry's Mod", "Overwatch",
+	"Call of Duty", "Destiny"];
 
 module.exports = {
 	id: "gamerole",
