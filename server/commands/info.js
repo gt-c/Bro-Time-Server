@@ -423,20 +423,14 @@ module.exports = {
 		var plainOptions = ["advertisement", "gameroles", "namecolors", "howtogetrole", "donate", "levelroles"];
 		if(choice === null) {
 			choice1 = awaitReply(call.message, `Specify the information you want. Choices: \`${plainOptions.join("`, `")}\`.`).then(userChoice => {
-				var choice2 = options.find(function(option) {
-					return option.toLowerCase().startsWith(userChoice.toLowerCase());
-				});
-				if(choice2 === undefined) {
+				if(!options.includes(choice.toLowerCase())) {
 					call.message.reply(`Invalid choice. Choices are: \`${plainOptions.join("`, `")}\`.`);
 				} else {
 					infoTarget(call.message, prompt, Discord, choice, param);
 				}
 			});
 		} else {
-			choice1 = options.find(function(option) {
-				return option.toLowerCase().startsWith(choice.toLowerCase());
-			});
-			if(choice1 === undefined) {
+			if(!options.includes(choice.toLowerCase())) {
 				call.message.reply(`Invalid choice. Choices are: \`${plainOptions.join("`, `")}\`.`);
 			} else {
 				infoTarget(call.message, prompt, Discord, choice, param);
