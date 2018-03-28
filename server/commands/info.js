@@ -16,18 +16,6 @@ async function awaitReply(message, question, limit = 60000) {
 	}
 }
 
-function ad(message, prompt, param) {
-	var toSend;
-	fs.readFile(__dirname + "/../info/ad.md", (err, data) => {
-		if(err) {
-			throw err;
-		} else {
-			if(prompt == "computer") toSend = `\`\`\`${data.toString("utf8")}\`\`\``;
-			message.channel.send(toSend);
-		}
-	});
-}
-
 async function gameRoles(message, Discord, prompt, param) {
 	if(param !== undefined) prompt = param;
 	var currentRole;
@@ -38,7 +26,7 @@ async function gameRoles(message, Discord, prompt, param) {
 	];
 	if(prompt.toLowerCase() === "preview") {
 		var gameRoleEmbed = new Discord.RichEmbed()
-			.setTitle(games[0])
+			.setTitle(games[0].substr(1).slice(0, -1))
 			.setDescription(`Players: \`${message.guild.roles.find("name", games[0].substr(1).slice(0, -1)).members.size}\``)
 			.setColor(message.guild.roles.find("name", games[0].substr(1).slice(0, -1)).hexColor);
 		var emojiArray = ["◀", "▶"];
@@ -122,7 +110,7 @@ async function nameColors(message, Discord, prompt, param) {
 	if(prompt.toLowerCase() === "preview") {
 		currentRole = message.guild.roles.find("name", colorRoles[0].substr(1).slice(0, -1));
 		var nameColorEmbed = new Discord.RichEmbed()
-			.setTitle(colorRoles[0])
+			.setTitle(colorRoles[0].substr(1).slice(0, -1))
 			.setDescription(`Hex: \`${currentRole.hexColor}\`\nMembers: \`${currentRole.members.size}\``)
 			.setColor(message.guild.roles.find("name", colorRoles[0].substr(1).slice(0, -1)).hexColor);
 		var emojiArray = ["◀", "▶"];
@@ -207,7 +195,7 @@ async function howToGetRole(message, Discord, prompt, param) {
 	];
 	if(prompt.toLowerCase() === "preview") {
 		var roleEmbed = new Discord.RichEmbed()
-			.setTitle(obtainableRoles[0])
+			.setTitle(obtainableRoles[0].substr(1).slice(0, -1))
 			.setDescription(`Members: \`${message.guild.roles.find("name", obtainableRoles[0].substr(1).slice(0, -1)).members.size}\`\nObtain: \`${descriptions[0]}\``)
 			.setColor(message.guild.roles.find("name", obtainableRoles[0].substr(1).slice(0, -1)).hexColor);
 		var emojiArray = ["◀", "▶"];
@@ -287,7 +275,7 @@ async function levelRoles(message, Discord, prompt, param) {
 	var level = ["61", "60", "55", "51", "50", "45", "41", "40", "35", "31", "30", "25", "21", "20", "15", "11", "10", "5", "1", "0"];
 	if(prompt.toLowerCase() === "preview") {
 		var roleEmbed = new Discord.RichEmbed()
-			.setTitle(levelRoles[0])
+			.setTitle(levelRoles[0].substr(1).slice(0, -1))
 			.setDescription(`Members: \`${message.guild.roles.find("name", levelRoles[0].substr(1).slice(0, -1)).members.size}\`\nObtain: \`level ${level[0]}\``)
 			.setColor(message.guild.roles.find("name", levelRoles[0].substr(1).slice(0, -1)).hexColor);
 		var emojiArray = ["◀", "▶"];
@@ -366,6 +354,19 @@ function donate(message) {
 		}
 	});
 }
+
+function ad(message, prompt, param) {
+	var toSend;
+	fs.readFile(__dirname + "/../info/ad.md", (err, data) => {
+		if(err) {
+			throw err;
+		} else {
+			if(prompt == "computer") toSend = `\`\`\`${data.toString("utf8")}\`\`\``;
+			message.channel.send(toSend);
+		}
+	});
+}
+
 
 async function infoTarget(message, prompt, Discord, choice, param) {
 	if(choice.toLowerCase() === "ad" || choice.toLowerCase() === "advertisement") {
