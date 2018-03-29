@@ -357,12 +357,12 @@ function donate(message) {
 
 function ad(message, prompt, param) {
 	if(param !== undefined) prompt = param;
-	var toSend;
 	fs.readFile(__dirname + "/../info/ad.md", (err, data) => {
 		if(err) {
 			throw err;
 		} else {
-			if(prompt == "computer") toSend = `\`\`\`${data.toString("utf8")}\`\`\``;
+			var toSend = data.toString("utf8");
+			if(prompt == "computer") toSend = `\`\`\`${toSend}\`\`\``;
 			message.channel.send(toSend);
 		}
 	});
