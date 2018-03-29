@@ -65,7 +65,15 @@ async function gameRoles(message, Discord, prompt, param) {
 					embed: gameRoleEmbed
 				});
 			});
-			reactions.on("end", () => embedMessage.edit("Interactive command ended: 2 minutes passed."));
+			reactions.on("end", function() {
+				embedMessage.edit("Interactive command ended: 2 minutes passed.", { embed: null});
+				embedMessage.reactions.forEach(function(reaction) {
+					let users = reaction.fetchUsers();
+					users.forEach(function(user) {
+						reaction.remove(user);
+					});
+				});
+			});
 		});
 	} else if(prompt.toLowerCase() === "specify") {
 		var prompt2 = await awaitReply(message, "What game role do you want info on?");
@@ -149,7 +157,15 @@ async function nameColors(message, Discord, prompt, param) {
 					embed: nameColorEmbed
 				});
 			});
-			reactions.on("end", () => embedMessage.edit("Interactive command ended: 2 minutes passed."));
+			reactions.on("end", function() {
+				embedMessage.edit("Interactive command ended: 2 minutes passed.", { embed: null});
+				embedMessage.reactions.forEach(function(reaction) {
+					let users = reaction.fetchUsers();
+					users.forEach(function(user) {
+						reaction.remove(user);
+					});
+				});
+			});
 		});
 	} else if(prompt.toLowerCase() === "specify") {
 		var prompt2 = await awaitReply(message, "What name color role do you want info on?");
@@ -234,7 +250,15 @@ async function howToGetRole(message, Discord, prompt, param) {
 					embed: roleEmbed
 				});
 			});
-			reactions.on("end", () => embedMessage.edit("Interactive command ended: 2 minutes passed."));
+			reactions.on("end", function() {
+				embedMessage.edit("Interactive command ended: 2 minutes passed.", { embed: null});
+				embedMessage.reactions.forEach(function(reaction) {
+					let users = reaction.fetchUsers();
+					users.forEach(function(user) {
+						reaction.remove(user);
+					});
+				});
+			});
 		});
 	} else if(prompt.toLowerCase() === "specify") {
 		var prompt2 = await awaitReply(message, "What obtainable role do you want info on?");
@@ -314,7 +338,15 @@ async function levelRoles(message, Discord, prompt, param) {
 					embed: roleEmbed
 				});
 			});
-			reactions.on("end", () => embedMessage.edit("Interactive command ended: 2 minutes passed."));
+			reactions.on("end", function() {
+				embedMessage.edit("Interactive command ended: 2 minutes passed.", { embed: null});
+				embedMessage.reactions.forEach(function(reaction) {
+					let users = reaction.fetchUsers();
+					users.forEach(function(user) {
+						reaction.remove(user);
+					});
+				});
+			});
 		});
 	} else if(prompt.toLowerCase() === "specify") {
 		var prompt2 = await awaitReply(message, "What level role do you want info on?");
