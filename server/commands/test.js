@@ -8,7 +8,7 @@ module.exports = {
 			if(err) {
 				throw err;
 			} else {
-				call.message.channel.send(data.toString("utf8"));
+				call.message.channel.send(data.toString("utf8")).split("\n");
 			}
 		});
 	}
